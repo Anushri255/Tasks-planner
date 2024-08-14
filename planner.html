@@ -1,118 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Work Plan Calculator</title>
     <style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
 
-header {
-    background-color: #f16dd0; 
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
 
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
-}
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
 
-header p {
-    margin: 10px 0 0;
-    font-size: 1.2em;
-}
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+        }
 
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
-}
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
 
-.form-section, .task-section, .log-section {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 100%;
-    max-width: 600px;
-    margin-bottom: 20px;
-}
+        .form-section, .task-section, .log-section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
 
-.form-section, .task-section, .log-section label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
-}
+        .form-section label, .task-section label, .log-section label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
 
-.form-section, .log-section,  .task-section input {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-}
+        .form-section input, .log-section input, .task-section input, .log-section select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
 
-.form-section, .log-section, .task-section button {
-    background-color: #a1deeb;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1em;
-    margin-top: 15px;
-}
+        .form-section button, .task-section button, .log-section button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+        }
 
-.form-section, .log-section, .task-section button:hover {
-    background-color: #6fd9f0;
-}
+        .form-section button:hover, .task-section button:hover, .log-section button:hover {
+            background-color: #0056b3;
+        }
 
-.task-list, .log-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
+        .task-list, .log-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
 
-.task-list li, .log-list li {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .task-list li, .log-list li {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
 
-.completed {
-    text-decoration: line-through;
-}
+        .task-list li:nth-child(odd), .log-list li:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
 
+        .progress-slider {
+            width: 100px;
+            margin-right: 10px;
+        }
 
-.progress-slider {
-    width: 100px;
-    margin-right: 10px;
-}
+        .form-section input, .form-section button, .task-section input, .task-section button, .log-section input, .log-section select, .log-section button {
+            font-size: 1em;
+        }
 
+        .task-log-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px; 
+        }
+
+        .task-section, .log-section {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .task-section:last-child, .log-section:last-child {
+            margin-right: 0;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Work Plan Calculator</h1>
-        <p>How much work you need to do each day to meet your project deadline?.</p>
+        <p>Calculate your daily work requirement to meet project deadlines.</p>
     </header>
 
     <main>
-        <section class="form-section" style="height: 90px; align-content: center;">
+        <section class="form-section">
             <form id="workForm">
-                <label for="totalWork">Total Work (in hours) :</label>
+                <label for="totalWork">Total Work (in hours):</label>
                 <input type="number" id="totalWork" required>
                 
                 <label for="deadline">Project Deadline:</label>
@@ -127,136 +148,133 @@ main {
 
         <section id="result" class="result"></section>
 
-        <section class="task-section">
-            <h2>Task Tracker</h2>
-            <label for="taskDescription">Task Description:</label>
-            <input type="text" id="taskDescription" placeholder="Enter task description">
-            <button id="addTaskButton">Add Task</button>
-            <ul id="taskList" class="task-list"></ul>
-        </section>
+        <div class="task-log-container">
+            <section class="task-section">
+                <h2>Task Tracker</h2>
+                <label for="taskDescription">Task Description:</label>
+                <input type="text" id="taskDescription" placeholder="Enter task description">
+                <button id="addTaskButton">Add Task</button>
+                <ul id="taskList" class="task-list"></ul>
+            </section>
 
-        <section class="log-section">
-            <h2>Daily Log</h2>
-            <label for="workDate">Date:</label>
-            <input type="date" id="workDate">
-            
-            <label for="hoursWorked">Hours Worked:</label>
-            <input type="number" id="hoursWorked" step="0.1" placeholder="Enter hours worked">
-            
-            <label for="taskSelect">Select Task:</label>
-            <select id="taskSelect">
-                <option value="">-- Select a task --</option>
-            </select>
-            
-            <button id="logHoursButton">Log Hours</button>
-            <ul id="logList" class="log-list"></ul>
-        </section>
-        
+            <section class="log-section">
+                <h2>Daily Log</h2>
+                <label for="workDate">Date:</label>
+                <input type="date" id="workDate">
+                
+                <label for="hoursWorked">Hours Worked:</label>
+                <input type="number" id="hoursWorked" step="0.1" placeholder="Enter hours worked">
+                
+                <label for="taskSelect">Select Task:</label>
+                <select id="taskSelect">
+                    <option value="">-- Select a task --</option>
+                </select>
+                
+                <button id="logHoursButton">Log Hours</button>
+                <ul id="logList" class="log-list"></ul>
+            </section>
+        </div>
     </main>
-</body>
-<script>
-    document.getElementById('workForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    <script>
+        document.getElementById('workForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-    const totalWork = parseFloat(document.getElementById('totalWork').value);
-    const deadline = new Date(document.getElementById('deadline').value);
-    const today = new Date();
+            const totalWork = parseFloat(document.getElementById('totalWork').value);
+            const deadline = new Date(document.getElementById('deadline').value);
+            const today = new Date();
 
-    if (isNaN(totalWork) || totalWork <= 0) {
-        alert('Invalid total work hours, cannot be negative - Please enter a valid amount of work hours.');
-        return;
-    }
+            if (isNaN(totalWork) || totalWork <= 0) {
+                alert('Invalid total work hours. Please enter a positive number.');
+                return;
+            }
 
-    if (deadline <= today) {
-        alert('Invalid deadline! The deadline must be a future date.');
-        return;
-    }
+            if (deadline <= today) {
+                alert('Invalid deadline! The deadline must be a future date.');
+                return;
+            }
 
-    const daysLeft = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
-    const dailyWork = (totalWork / daysLeft).toFixed(2);
+            const daysLeft = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+            const dailyWork = (totalWork / daysLeft).toFixed(2);
 
-    document.getElementById('result').innerHTML = `
-        <p>You will need to work ${dailyWork} hours per day to complete the project by the deadline.</p>
-    `;
-});
-
-const taskProgress = {}; 
-
-document.getElementById('addTaskButton').addEventListener('click', function() {
-    const taskDescription = document.getElementById('taskDescription').value;
-
-    if (taskDescription) {
-        const totalHours = parseFloat(prompt("Enter total hours allocated for this task:"));
-        
-        if (isNaN(totalHours) || totalHours <= 0) {
-            alert('Invalid total hours. Please enter a positive number.');
-            return;
-        }
-
-        const taskList = document.getElementById('taskList');
-        const li = document.createElement('li');
-        li.textContent = taskDescription;
-
-        const progressSlider = document.createElement('input');
-        progressSlider.type = 'range';
-        progressSlider.min = 0;
-        progressSlider.max = 100;
-        progressSlider.value = 0;
-        progressSlider.classList.add('progress-slider');
-
-        taskProgress[taskDescription] = { totalHours: totalHours, loggedHours: 0, slider: progressSlider };
-
-        progressSlider.addEventListener('input', function() {
-            const value = progressSlider.value;
-            const blueValue = Math.round(255 * (value / 100));
-            li.style.backgroundColor = `rgb(${255 - blueValue}, ${255 - blueValue}, 255)`;
+            document.getElementById('result').innerHTML = `
+                <p>You need to work ${dailyWork} hours per day to complete the project by the deadline.</p>
+            `;
         });
 
-        li.appendChild(progressSlider);
-        taskList.appendChild(li);
+        const taskProgress = {};
 
-        const taskSelect = document.getElementById('taskSelect');
-        const option = document.createElement('option');
-        option.value = taskDescription;
-        option.textContent = taskDescription;
-        taskSelect.appendChild(option);
+        document.getElementById('addTaskButton').addEventListener('click', function() {
+            const taskDescription = document.getElementById('taskDescription').value;
 
-        document.getElementById('taskDescription').value = '';
-    } else {
-        alert('No task description - Please enter a task description.');
-    }
-});
+            if (taskDescription) {
+                const totalHours = parseFloat(prompt("Enter total hours allocated for this task:"));
 
-document.getElementById('logHoursButton').addEventListener('click', function() {
-    const workDate = document.getElementById('workDate').value;
-    const hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
-    const selectedTask = document.getElementById('taskSelect').value;
+                if (isNaN(totalHours) || totalHours <= 0) {
+                    alert('Invalid total hours. Please enter a positive number.');
+                    return;
+                }
 
-    if (workDate && !isNaN(hoursWorked) && selectedTask) {
-        const logList = document.getElementById('logList');
-        const li = document.createElement('li');
-        li.textContent = `Date: ${workDate}, Hours Worked: ${hoursWorked}, Task: ${selectedTask}`;
-        logList.appendChild(li);
+                const taskList = document.getElementById('taskList');
+                const li = document.createElement('li');
+                li.textContent = taskDescription;
 
-        const taskData = taskProgress[selectedTask];
-        taskData.loggedHours += hoursWorked;
-        
-        const progressPercentage = (taskData.loggedHours / taskData.totalHours) * 100;
-        taskData.slider.value = progressPercentage;
+                const progressSlider = document.createElement('input');
+                progressSlider.type = 'range';
+                progressSlider.min = 0;
+                progressSlider.max = 100;
+                progressSlider.value = 0;
+                progressSlider.classList.add('progress-slider');
 
-        const blueValue = Math.round(255 * (progressPercentage / 100));
-        taskData.slider.parentElement.style.backgroundColor = `rgb(${255 - blueValue}, ${255 - blueValue}, 255)`;
+                taskProgress[taskDescription] = { totalHours: totalHours, loggedHours: 0, slider: progressSlider };
 
-        document.getElementById('workDate').value = '';
-        document.getElementById('hoursWorked').value = '';
-        document.getElementById('taskSelect').value = '';
-    } else {
-        alert('Please enter the date, hours worked, and select a task.');
-    }
-});
+                progressSlider.addEventListener('input', function() {
+                    const value = progressSlider.value;
+                    const blueValue = Math.round(255 * (value / 100));
+                    li.style.backgroundColor = `rgb(${255 - blueValue}, ${255 - blueValue}, 255)`;
+                });
 
+                li.appendChild(progressSlider);
+                taskList.appendChild(li);
 
+                const taskSelect = document.getElementById('taskSelect');
+                const option = document.createElement('option');
+                option.value = taskDescription;
+                option.textContent = taskDescription;
+                taskSelect.appendChild(option);
 
+                document.getElementById('taskDescription').value = '';
+            } else {
+                alert('No task description -Please enter a task description.');
+            }
+        });
 
-</script>
+        document.getElementById('logHoursButton').addEventListener('click', function() {
+            const workDate = document.getElementById('workDate').value;
+            const hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
+            const selectedTask = document.getElementById('taskSelect').value;
+
+            if (workDate && !isNaN(hoursWorked) && selectedTask) {
+                const logList = document.getElementById('logList');
+                const li = document.createElement('li');
+                li.textContent = `Date: ${workDate}, Hours Worked: ${hoursWorked}, Task: ${selectedTask}`;
+                logList.appendChild(li);
+
+                const taskData = taskProgress[selectedTask];
+                taskData.loggedHours += hoursWorked;
+
+                const progressPercentage = (taskData.loggedHours / taskData.totalHours) * 100;
+                taskData.slider.value = progressPercentage;
+
+                const blueValue = Math.round(255 * (progressPercentage / 100));
+                taskData.slider.parentElement.style.backgroundColor = `rgb(${255 - blueValue}, ${255 - blueValue}, 255)`;
+
+                document.getElementById('workDate').value = '';
+                document.getElementById('hoursWorked').value = '';
+                document.getElementById('taskSelect').value = '';
+            } else {
+                alert('Please enter the date, hours worked, and select a task.');
+            }
+        });
+    </script>
+</body>
 </html>
