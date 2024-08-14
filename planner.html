@@ -75,14 +75,24 @@ main {
     background-color: #45a049;
 }
 
-.result {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
+.task-list, .log-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-list li, .log-list li {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.completed {
+    text-decoration: line-through;
 }
 
 footer {
@@ -98,6 +108,11 @@ footer {
 footer p {
     margin: 0;
     font-size: 0.9em;
+}
+
+.progress-slider {
+    width: 100px;
+    margin-right: 10px;
 }
 
     </style>
@@ -179,16 +194,26 @@ document.getElementById('addTaskButton').addEventListener('click', function() {
         const taskList = document.getElementById('taskList');
         const li = document.createElement('li');
         li.textContent = taskDescription;
+
         const checkBox = document.createElement('input');
-        checkBox.type = 'checkbox';
-        checkBox.addEventListener('change', function() {
-            if (this.checked) {
-                li.classList.add('completed');
-            } else {
-                li.classList.remove('completed');
-            }
-        });
-        li.prepend(checkBox);
+
+        const progressSlider = document.createElement('input');
+        progressSlider.type = 'range';
+        progressSlider.min = 0;
+        progressSlider.max = 100;
+        progressSlider.value = 0;
+        progressSlider.classList.add('progress-slider');
+        progressSlider.addEventListener('input', function() {
+        const value = progressSlider.value;
+        
+        const blueValue = Math.round(255 * (value / 100)); 
+        
+        li.style.backgroundColor = `rgb(${255 - blueValue}, ${255 - blueValue}, 255)`;
+    });
+
+
+        
+        li.appendChild(progressSlider);
         taskList.appendChild(li);
         document.getElementById('taskDescription').value = '';
     } else {
