@@ -36,7 +36,7 @@ main {
     padding: 20px;
 }
 
-.form-section {
+.form-section, .task-section {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -46,13 +46,13 @@ main {
     margin-bottom: 20px;
 }
 
-.form-section label {
+.form-section, .task-section label {
     display: block;
     font-weight: bold;
     margin-top: 10px;
 }
 
-.form-section input {
+.form-section, .task-section input {
     width: calc(100% - 22px);
     padding: 10px;
     margin-top: 5px;
@@ -71,7 +71,7 @@ main {
     margin-top: 15px;
 }
 
-.form-section button:hover {
+.form-section, .task-section button:hover {
     background-color: #45a049;
 }
 
@@ -124,8 +124,16 @@ footer p {
             </form>
         </section>
 
-        <section id="result" class="result">
+        <section id="result" class="result"></section>
+
+        <section class="task-section">
+            <h2>Task Tracker</h2>
+            <label for="taskDescription">Task Description:</label>
+            <input type="text" id="taskDescription" placeholder="Enter task description">
+            <button id="addTaskButton">Add Task</button>
+            <ul id="taskList" class="task-list"></ul>
         </section>
+
     </main>
 </body>
 <script>
@@ -152,6 +160,29 @@ footer p {
     document.getElementById('result').innerHTML = `
         <p>You will need to work ${dailyWork} hours per day to complete the project by the deadline.</p>
     `;
+});
+
+document.getElementById('addTaskButton').addEventListener('click', function() {
+    const taskDescription = document.getElementById('taskDescription').value;
+    if (taskDescription) {
+        const taskList = document.getElementById('taskList');
+        const li = document.createElement('li');
+        li.textContent = taskDescription;
+        const checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.addEventListener('change', function() {
+            if (this.checked) {
+                li.classList.add('completed');
+            } else {
+                li.classList.remove('completed');
+            }
+        });
+        li.prepend(checkBox);
+        taskList.appendChild(li);
+        document.getElementById('taskDescription').value = '';
+    } else {
+        alert('No task description - Please enter a task description.');
+    }
 });
 
 </script>
