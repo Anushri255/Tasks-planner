@@ -143,9 +143,15 @@ main {
             <label for="hoursWorked">Hours Worked:</label>
             <input type="number" id="hoursWorked" step="0.1" placeholder="Enter hours worked">
             
+            <label for="taskSelect">Select Task:</label>
+            <select id="taskSelect">
+                <option value="">-- Select a task --</option>
+            </select>
+            
             <button id="logHoursButton">Log Hours</button>
             <ul id="logList" class="log-list"></ul>
         </section>
+        
     </main>
 </body>
 <script>
@@ -181,26 +187,30 @@ document.getElementById('addTaskButton').addEventListener('click', function() {
         const li = document.createElement('li');
         li.textContent = taskDescription;
 
-        const checkBox = document.createElement('input');
-
         const progressSlider = document.createElement('input');
         progressSlider.type = 'range';
         progressSlider.min = 0;
         progressSlider.max = 100;
         progressSlider.value = 0;
         progressSlider.classList.add('progress-slider');
+
+        // Gradient color change based on slider value
         progressSlider.addEventListener('input', function() {
-        const value = progressSlider.value;
-        
-        const blueValue = Math.round(255 * (value / 100)); 
-        
-        li.style.backgroundColor = `rgb(${255 - blueValue}, ${255 - blueValue}, 255)`;
-    });
+            const value = progressSlider.value;
+            const blueValue = Math.round(255 * (value / 100));
+            li.style.backgroundColor = `rgb(${255 - blueValue}, ${255 - blueValue}, 255)`;
+        });
 
-
-        
         li.appendChild(progressSlider);
         taskList.appendChild(li);
+
+        // Add task to the dropdown
+        const taskSelect = document.getElementById('taskSelect');
+        const option = document.createElement('option');
+        option.value = taskDescription;
+        option.textContent = taskDescription;
+        taskSelect.appendChild(option);
+
         document.getElementById('taskDescription').value = '';
     } else {
         alert('No task description - Please enter a task description.');
@@ -210,17 +220,21 @@ document.getElementById('addTaskButton').addEventListener('click', function() {
 document.getElementById('logHoursButton').addEventListener('click', function() {
     const workDate = document.getElementById('workDate').value;
     const hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
-    if (workDate && !isNaN(hoursWorked)) {
+    const selectedTask = document.getElementById('taskSelect').value;
+
+    if (workDate && !isNaN(hoursWorked) && selectedTask) {
         const logList = document.getElementById('logList');
         const li = document.createElement('li');
-        li.textContent = `Date: ${workDate}, Hours Worked: ${hoursWorked}`;
+        li.textContent = `Date: ${workDate}, Hours Worked: ${hoursWorked}, Task: ${selectedTask}`;
         logList.appendChild(li);
         document.getElementById('workDate').value = '';
         document.getElementById('hoursWorked').value = '';
+        document.getElementById('taskSelect').value = '';
     } else {
-        alert('Please enter both the date and hours worked.');
+        alert('Please enter the date, hours worked, and select a task.');
     }
 });
+
 
 </script>
 </html>
