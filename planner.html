@@ -180,9 +180,19 @@ main {
     `;
 });
 
+const taskProgress = {}; 
+
 document.getElementById('addTaskButton').addEventListener('click', function() {
     const taskDescription = document.getElementById('taskDescription').value;
+
     if (taskDescription) {
+        const totalHours = parseFloat(prompt("Enter total hours allocated for this task:"));
+        
+        if (isNaN(totalHours) || totalHours <= 0) {
+            alert('Invalid total hours. Please enter a positive number.');
+            return;
+        }
+
         const taskList = document.getElementById('taskList');
         const li = document.createElement('li');
         li.textContent = taskDescription;
@@ -194,7 +204,8 @@ document.getElementById('addTaskButton').addEventListener('click', function() {
         progressSlider.value = 0;
         progressSlider.classList.add('progress-slider');
 
-        // Gradient color change based on slider value
+        taskProgress[taskDescription] = { totalHours: totalHours, loggedHours: 0, slider: progressSlider };
+
         progressSlider.addEventListener('input', function() {
             const value = progressSlider.value;
             const blueValue = Math.round(255 * (value / 100));
@@ -204,7 +215,6 @@ document.getElementById('addTaskButton').addEventListener('click', function() {
         li.appendChild(progressSlider);
         taskList.appendChild(li);
 
-        // Add task to the dropdown
         const taskSelect = document.getElementById('taskSelect');
         const option = document.createElement('option');
         option.value = taskDescription;
@@ -227,6 +237,16 @@ document.getElementById('logHoursButton').addEventListener('click', function() {
         const li = document.createElement('li');
         li.textContent = `Date: ${workDate}, Hours Worked: ${hoursWorked}, Task: ${selectedTask}`;
         logList.appendChild(li);
+
+        const taskData = taskProgress[selectedTask];
+        taskData.loggedHours += hoursWorked;
+        
+        const progressPercentage = (taskData.loggedHours / taskData.totalHours) * 100;
+        taskData.slider.value = progressPercentage;
+
+        const blueValue = Math.round(255 * (progressPercentage / 100));
+        taskData.slider.parentElement.style.backgroundColor = `rgb(${255 - blueValue}, ${255 - blueValue}, 255)`;
+
         document.getElementById('workDate').value = '';
         document.getElementById('hoursWorked').value = '';
         document.getElementById('taskSelect').value = '';
@@ -234,6 +254,8 @@ document.getElementById('logHoursButton').addEventListener('click', function() {
         alert('Please enter the date, hours worked, and select a task.');
     }
 });
+
+
 
 
 </script>
