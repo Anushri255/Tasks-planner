@@ -127,5 +127,32 @@ footer p {
         <section id="result" class="result">
         </section>
     </main>
-\</body>
+</body>
+<script>
+    document.getElementById('workForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const totalWork = parseFloat(document.getElementById('totalWork').value);
+    const deadline = new Date(document.getElementById('deadline').value);
+    const today = new Date();
+
+    if (isNaN(totalWork) || totalWork <= 0) {
+        alert('Invalid total work hours, cannot be negative - Please enter a valid amount of work hours.');
+        return;
+    }
+
+    if (deadline <= today) {
+        alert('Invalid deadline! The deadline must be a future date.');
+        return;
+    }
+
+    const daysLeft = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+    const dailyWork = (totalWork / daysLeft).toFixed(2);
+
+    document.getElementById('result').innerHTML = `
+        <p>You will need to work ${dailyWork} hours per day to complete the project by the deadline.</p>
+    `;
+});
+
+</script>
 </html>
